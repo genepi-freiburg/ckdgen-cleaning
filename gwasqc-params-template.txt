@@ -1,0 +1,29 @@
+# Description (meaning) of the columns
+ALLELE        coded_all noncoded_all
+CALLRATE      callrate
+CHR           chr
+EFFECT        beta
+FREQLABEL     AF_coded_all
+HWE_PVAL      HWE_pval
+IMPUTED       IS_IMPUTED
+IMP_QUALITY   oevar_imp
+MARKER        MARKER
+N             n_total
+POSITION      position
+PVALUE        pval
+STRAND        strand_genome
+STDERR        SE
+USED_FOR_IMP  used_for_imp
+AVPOSTPROB    avpostprob
+
+# High quality filters
+HQ_SNP   0.001   0.3
+
+# Plotting filters
+MAF      0.01   0.05
+IMP      0.5    0.9
+
+# Prefix for output files
+PREFIX   gwasqc
+
+# Input file with GWAS data
