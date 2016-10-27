@@ -1,0 +1,6 @@
+set output outfile
+set term png size 1024,1024
+set xlabel "Study (MAF)"
+set ylabel "Reference (MAF)"
+plot infile using 3:5 title 'Minor Allele Frequency' 
+

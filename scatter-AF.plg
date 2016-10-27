@@ -1,0 +1,6 @@
+set output outfile
+set term png size 1024,1024
+set xlabel "Study (AF)"
+set ylabel "Reference (AF)"
+plot infile using 2:4 title 'Allele Frequency' 
+
