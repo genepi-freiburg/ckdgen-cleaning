@@ -67,7 +67,9 @@ cut -f 2 ${INFO_OUT_DIR}/$BN | uniq -d > ${DUPLICATES_DIR}/${BN}.duplicates
 echo "Find uniques: $BN.unique ($INFO_OUT_DIR -> $DUPLICATES_DIR)"
 cut -f 2 ${INFO_OUT_DIR}/$BN | uniq -u > ${DUPLICATES_DIR}/${BN}.unique
 echo "Remove duplicates by join: $BN ($INFO_OUT_DIR -> ${INFO_UNIQUE_DIR})"
-join -1 2 -2 1 ${INFO_OUT_DIR}/$BN ${DUPLICATES_DIR}/${BN}.unique > ${INFO_UNIQUE_DIR}/$BN
+join -1 2 -2 1 \
+	-t $'\t' \
+	${INFO_OUT_DIR}/$BN ${DUPLICATES_DIR}/${BN}.unique > ${INFO_UNIQUE_DIR}/$BN
 
 wc -l $FN ${INFO_OUT_DIR}/$BN ${DUPLICATES_DIR}/${BN}.unique \
 	${DUPLICATES_DIR}/${BN}.duplicates ${INFO_UNIQUE_DIR}/$BN | \

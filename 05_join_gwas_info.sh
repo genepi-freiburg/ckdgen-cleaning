@@ -66,6 +66,7 @@ do
 	# gwas binary: +4 cols (22 instead of 18)
 
 	join --header -1 2 -2 1 \
+		-t $'\t' \
 		-o 1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,1.10,1.11,1.12,1.13,1.14,1.15,1.16,2.9,1.18,2.8,1.20,1.21,1.22,1.23 \
 		$GWAS_IN_DIR/$OUT $INFO_IN_DIR/$INFO > $GWAS_OUT_DIR/$OUT
 done
@@ -81,6 +82,10 @@ do
 	echo "NoChr name: $NOCHR_NAME"
 
 	/shared/cleaning/scripts/concat-without-headers.sh $GWAS_OUT_DIR/$STAR_NAME $GWAS_JOIN_DIR/$NOCHR_NAME
+
+	echo "bgzip and tabix: $BN"
+	cat $GWAS_JOIN_DIR/$NOCHR_NAME | bgzip > ${GWAS_JOIN_DIR}/${NOCHR_NAME}.gz
+	tabix -s 4 -b 5 -e 5 -S 1 -f ${GWAS_JOIN_DIR}/${NOCHR_NAME}.gz
 done
 
 md5sum $GWAS_JOIN_DIR/* | tee 05_gwas_combined.md5.txt
