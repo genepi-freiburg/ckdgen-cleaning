@@ -1,2 +1,7 @@
+These are scripts we use to perform data cleaning prior to meta-analysis
+in the CKDgen R4 project.
+
+
+
 Sites: ftp://ngs.sanger.ac.uk/production/hrc/HRC.r1-1/HRC.r1-1.GRCh37.wgs.mac5.sites.tab.gz
 
