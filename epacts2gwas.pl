@@ -148,7 +148,7 @@ while (<INPUT>) {
 	$outchr = $data[$chrCol];
     }
 
-    # strand, beta/se/pval - TODO check numeric?
+    # strand, beta/se/pval
     my $beta = $data[$betaCol];
     my $se = $data[$seCol];
     my $pval = $data[$pvalCol];
@@ -164,7 +164,6 @@ while (<INPUT>) {
     $included++;
 
     # marker, chromosome number and position
-    # TODO SNP/INDEL CODING
     #my $myMarker = sprintf("%02d", $outchr) . "_" . sprintf("%09d", $data[$posCol]) . "_" . $noncoded . "_" . $coded;
     #my $myMarker = sprintf("%02d", $outchr) . "_" . sprintf("%09d", $data[$posCol]) . "_" . $noncoded . "_" . $coded;
     my $snpIndel = "S";
@@ -182,7 +181,7 @@ while (<INPUT>) {
     # alleles
     print OUTPUT $coded . "\t" . $noncoded . "\t"; # coded/non_coded
 
-    # strand, beta/se/pval - TODO check numeric?
+    # strand, beta/se/pval
     print OUTPUT "+\t" . $beta . "\t" . $se . "\t" . $pval . "\t";
 
     # AF_coded_all
