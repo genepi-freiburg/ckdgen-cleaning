@@ -30,7 +30,7 @@ fi
 
 POSITIVE_CONTROLS="/shared/cleaning/data/positive-controls.txt"
 head -n 1 $POSITIVE_CONTROLS > ${POSITIVE_FILE}
-cat $POSITIVE_CONTROLS | grep $PHENO | grep $POP >> ${POSITIVE_FILE}
+cat $POSITIVE_CONTROLS | grep "$PHENO	" | grep "$POP	" >> ${POSITIVE_FILE}
 
 echo "Use this positive control(s):"
 cat ${POSITIVE_FILE}
