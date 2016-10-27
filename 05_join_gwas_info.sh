@@ -82,3 +82,5 @@ do
 
 	/shared/cleaning/scripts/concat-without-headers.sh $GWAS_OUT_DIR/$STAR_NAME $GWAS_JOIN_DIR/$NOCHR_NAME
 done
+
+md5sum $GWAS_JOIN_DIR/* | tee ../05_gwas_combined.md5.txt

@@ -10,3 +10,5 @@ do
 	echo "Processing: $BN"
 	/shared/cleaning/scripts/epacts2gwas.pl -i $FN -o $GWAS_OUT/${BN}.gwas
 done
+
+md5sum $EPACTS_IN/*.gz | tee 01_epacts_input.md5.txt
