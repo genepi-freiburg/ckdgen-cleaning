@@ -20,6 +20,9 @@ then
 elif [[ $FN == *_SAS_* ]]
 then
         echo "SAS"
+elif [[ $FN == *_SA_* ]]
+then
+        echo "SAS"
 else
 	echo "???"
 fi
