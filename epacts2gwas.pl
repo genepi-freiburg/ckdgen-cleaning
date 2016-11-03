@@ -128,7 +128,8 @@ while (<INPUT>) {
 
     # marker name and alleles
     my $marker = $data[$markerCol];
-    if ($marker !~ /^[^_]+\_([\w\<\>:]+)\/([\w\<\>:]+)\_[^\_]+$/) {
+   #if ($marker !~ /^[^_]+\_([\w\<\>:]+)\/([\w\<\>:]+)\_[^\_]+$/) {
+    if ($marker !~ /^[^_]+\_([A-Z\<\>:]+)\/([A-Z\<\>:]+)\_.*$/) {
         print "ERROR: Marker name not parseable: $marker -> skip line\n";
         $errors++;
         next;
