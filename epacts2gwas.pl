@@ -46,6 +46,9 @@ if (exists $opts{'c'}) {
     if ($opts{'i'} =~ /chr(\d+)/i) {
 	$chr = $1;
 	print "Auto-detected chromosome $chr.\n";
+    } elsif ($opts{'i'} =~ /chrX/) {
+	$chr = "X";
+	print "Auto-detected chromosome X.\n";
     }
 }
 
@@ -128,8 +131,8 @@ while (<INPUT>) {
 
     # marker name and alleles
     my $marker = $data[$markerCol];
-   #if ($marker !~ /^[^_]+\_([\w\<\>:]+)\/([\w\<\>:]+)\_[^\_]+$/) {
-    if ($marker !~ /^[^_]+\_([A-Z\<\>:]+)\/([A-Z\<\>:]+)\_.*$/) {
+   #if ($marker !~ /^[^_]+\_([\w\<\>:]+)\/([\w\<\>:\-]+)\_[^\_]+$/) {
+    if ($marker !~ /^[^_]+\_([A-Z\<\>:]+)\/([A-Z\<\>:\-]+)\_.*$/) {
         print "ERROR: Marker name not parseable: $marker -> skip line\n";
         $errors++;
         next;
@@ -140,11 +143,13 @@ while (<INPUT>) {
     my $outchr;
     if ($chr ne "NA") {
 	$outchr = $chr;
-        if ($data[$chrCol] != $chr) {
-            print "ERROR: Chromosome in line does not match passed chromosome and/or file name. Skip line.\n";
-            $errors++;
-            next;
-        }
+        if ($chr ne "X") {
+            if ($data[$chrCol] != $chr) {
+                print "ERROR: Chromosome in line does not match passed chromosome and/or file name. Skip line.\n";
+                $errors++;
+                next;
+           }
+	}
     } else {
 	$outchr = $data[$chrCol];
     }
@@ -174,8 +179,14 @@ while (<INPUT>) {
 
     print OUTPUT $marker . "\t";
     #print OUTPUT $myMarker . "\t";
-    print OUTPUT sprintf("%02d", $outchr) . "_" . sprintf("%09d", $data[$posCol]) . "\t";
-    print OUTPUT sprintf("%02d", $outchr) . "_" . sprintf("%09d", $data[$posCol]) . "_" . $snpIndel . "\t";
+
+    my $chrFormatted = $outchr;
+    if ($outchr ne "X") {
+      $chrFormatted = sprintf("%02d", $outchr);
+    }
+
+    print OUTPUT $chrFormatted . "_" . sprintf("%09d", $data[$posCol]) . "\t";
+    print OUTPUT $chrFormatted . "_" . sprintf("%09d", $data[$posCol]) . "_" . $snpIndel . "\t";
     print OUTPUT $outchr . "\t"; # CHR
     print OUTPUT $data[$posCol] . "\t"; # POS
 
