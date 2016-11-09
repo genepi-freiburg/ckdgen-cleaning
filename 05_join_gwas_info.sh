@@ -46,6 +46,7 @@ do
 		fi
 	done
 	INFO=$(cat /tmp/info.txt)
+	rm -f /tmp/info.txt
 	if [ "$INFO" == "" ]
 	then
 		echo "INFO=$INFO"
