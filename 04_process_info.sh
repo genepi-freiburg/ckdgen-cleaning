@@ -46,7 +46,11 @@ cat $FN | \
 			}
 
                         split($1, chrpos, ":");
-                        chr = sprintf("%02d", chrpos[1]);
+			if (chrpos[1] != "X") {
+	                        chr = sprintf("%02d", chrpos[1]);
+			} else {
+				chr = "X";
+			}
                         pos = sprintf("%09d", chrpos[2]);
 
 			is_indel = length($2) > 1 || length($3) > 1;

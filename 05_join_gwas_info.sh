@@ -14,8 +14,10 @@ mkdir -p $GWAS_OUT_DIR $GWAS_JOIN_DIR
 for FN in `ls -1 $GWAS_IN_DIR`
 do
         CHR=`echo $FN | sed 's/.*chr\([0-9][0-9]\?\).*/\1/i'`
-        CHR_NOZERO=`echo $CHR | sed 's/0\([1-9]\)/\1/i'`
+	CHR=`echo $CHR | sed 's/.*chrX.*/X/i'`
 	OUT=`basename $FN`
+
+	echo "CHROMOSOME: $CHR"
 
 	#####################################################################
 	# DETERMINE INFO FILE TO USE ACCORDING TO "PAIRS" FILE
