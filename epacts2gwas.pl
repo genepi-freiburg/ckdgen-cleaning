@@ -132,7 +132,7 @@ while (<INPUT>) {
     # marker name and alleles
     my $marker = $data[$markerCol];
    #if ($marker !~ /^[^_]+\_([\w\<\>:]+)\/([\w\<\>:\-]+)\_[^\_]+$/) {
-    if ($marker !~ /^[^_]+\_([A-Z\<\>:]+)\/([A-Z\<\>:\-]+)\_.*$/) {
+    if ($marker !~ /^[^_]+\_([A-Z0-9\<\>:]+)\/([A-Z0-9\<\>:\-]+)\_.*$/) {
         print "ERROR: Marker name not parseable: $marker -> skip line\n";
         $errors++;
         next;
@@ -188,6 +188,7 @@ while (<INPUT>) {
     print OUTPUT $chrFormatted . "_" . sprintf("%09d", $data[$posCol]) . "\t";
     print OUTPUT $chrFormatted . "_" . sprintf("%09d", $data[$posCol]) . "_" . $snpIndel . "\t";
     print OUTPUT $outchr . "\t"; # CHR
+    #print OUTPUT $chrFormatted . "\t"; # CHR
     print OUTPUT $data[$posCol] . "\t"; # POS
 
     # alleles
