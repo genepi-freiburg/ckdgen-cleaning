@@ -5,6 +5,9 @@ then
 elif [[ $FN == *_EUR_* ]]
 then
 	echo "EUR"
+elif [[ $FN == *_EA_* ]]
+then
+        echo "EUR"
 elif [[ $FN == *_AFR_* ]]
 then
         echo "AFR"
