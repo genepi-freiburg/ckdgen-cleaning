@@ -79,7 +79,7 @@ echo "Joining files per chromosome"
 for FN in `ls -1 $GWAS_OUT_DIR/*chr01*`
 do
 	BN=`basename $FN`
-	STAR_NAME=`echo $BN | sed s/chr01/chr*/`
+	STAR_NAME=`echo $BN | sed s/chr01/chr??/`
 	echo "Star name:  $STAR_NAME"
 	NOCHR_NAME=`echo $BN | sed s/chr01\.//`
 	echo "NoChr name: $NOCHR_NAME"
@@ -89,6 +89,17 @@ do
 	echo "bgzip and tabix: $BN"
 	cat $GWAS_JOIN_DIR/$NOCHR_NAME | bgzip > ${GWAS_JOIN_DIR}/${NOCHR_NAME}.gz
 	tabix -s 4 -b 5 -e 5 -S 1 -f ${GWAS_JOIN_DIR}/${NOCHR_NAME}.gz
+done
+
+for FN in `ls -1 $GWAS_OUT_DIR/*chrX*`
+do
+        BN=`basename $FN`
+	echo "Move $BN"
+	cp $GWAS_OUT_DIR/$BN $GWAS_JOIN_DIR/
+
+        echo "bgzip and tabix: $BN"
+        cat $GWAS_JOIN_DIR/$BN | bgzip > ${GWAS_JOIN_DIR}/${BN}.gz
+        tabix -s 4 -b 5 -e 5 -S 1 -f ${GWAS_JOIN_DIR}/${BN}.gz
 done
 
 md5sum $GWAS_JOIN_DIR/* | tee 05_gwas_combined.md5.txt
