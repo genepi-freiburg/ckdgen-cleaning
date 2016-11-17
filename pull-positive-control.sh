@@ -109,11 +109,16 @@ then
 	echo "Detect position: $SNP_POS"
 	REGION="${SNP_CHROM}:${SNP_POS}-$((SNP_POS+1))"
 	if [[ "${SNP_CHROM}" -lt "10" ]] ; then
-		REGION="0${REGION}"
+		REGION2="0${REGION}"
 	fi
 	echo "Region: $REGION"
-	#cat $STUDY  | \
-	tabix ${STUDY}.gz ${REGION} | \
+	LINE=`tabix ${STUDY}.gz ${REGION}`
+	if [ "$LINE" == "" ]
+	then
+		LINE=`tabix ${STUDY}.gz ${REGION2}`
+	fi
+	#tabix ${STUDY}.gz ${REGION} | \
+	echo $LINE | \
         awk -v chr=$STUDY_CHR -v pos=$STUDY_POS -v all1=$STUDY_ALL1 -v all2=$STUDY_ALL2 -v freq=$STUDY_FREQ -v beta=$STUDY_BETA -v pval=$STUDY_PVAL \
 	    -v snp_chr=$SNP_CHROM -v snp_pos=$SNP_POS \
         'BEGIN { OFS="\t" } { 
