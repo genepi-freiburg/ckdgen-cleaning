@@ -32,7 +32,11 @@ cat $KGP  | \
 	awk -v chr=$KGP_CHR -v pos=$KGP_POS -v all1=$KGP_ALL1 -v all2=$KGP_ALL2 -v freq=$KGP_AF -v pop=$POP \
 	'{
                 if (FNR > 1) {
-			mychr = sprintf("%02d", $(chr+1));
+			if ($(chr+1) == "X") {
+				mychr = "X";
+			} else {
+				mychr = sprintf("%02d", $(chr+1));
+			}
 			mypos = sprintf("%09d", $(pos+1));
 			myall1 = $(all1+1);
 			myall2 = $(all2+1);
@@ -61,7 +65,8 @@ cat $KGP  | \
 	> ${KGP}.frequencies
 
 
-echo "Sort KGP file"
-sort ${KGP}.frequencies > ${KGP}.frequencies.sorted
+echo "Sort KGP file: $KGP"
+cat ${KGP}.frequencies | head -n 1 > ${KGP}.frequencies.sorted
+cat ${KGP}.frequencies | tail -n +2 | sort >> ${KGP}.frequencies.sorted
 
 done
