@@ -45,6 +45,9 @@ if (exists $opts{'c'}) {
 } else {
     if ($opts{'i'} =~ /chr(\d+)/i) {
 	$chr = $1;
+	if ($chr =~ /0(\d)/) {
+		$chr = $1;
+	}
 	print "Auto-detected chromosome $chr.\n";
     } elsif ($opts{'i'} =~ /chrX/) {
 	$chr = "X";
@@ -131,13 +134,20 @@ while (<INPUT>) {
 
     # marker name and alleles
     my $marker = $data[$markerCol];
-   #if ($marker !~ /^[^_]+\_([\w\<\>:]+)\/([\w\<\>:\-]+)\_[^\_]+$/) {
-    if ($marker !~ /^[^_]+\_([A-Z0-9\<\>:]+)\/([A-Z0-9\<\>:\-]+)\_.*$/) {
-        print "ERROR: Marker name not parseable: $marker -> skip line\n";
-        $errors++;
-        next;
-    }
     my $coded = $2, my $noncoded = $1;
+    if ($marker !~ /^[^_]+\_([A-Z0-9\<\>:]+)\/([A-Z0-9\<\>:\-]+)\_.*$/) {
+        if ($marker !~ /^[^_]+\_([A-Z0-9\<\>:]+)\/([A-Z0-9\<\>:\-]+)$/) {
+          print "ERROR: Marker name not parseable: $marker -> skip line\n";
+          $errors++;
+          next;
+        } else {
+	  $coded = $2;
+	  $noncoded = $1;
+	}
+    } else {
+        $coded = $2;
+        $noncoded = $1;
+    }
 
     # chromosome number
     my $outchr;
