@@ -69,7 +69,11 @@ cat $STUDY  | \
 			if (maf > 0.5) {
 				maf = 1 - maf;
 			}
-			print sprintf("%02d", $(chr+1)) "_" sprintf("%09d", $(pos+1)) "_" $(all1+1) "_" $(all2+1) "\t" myfreq "\t" maf
+			mychr = sprintf("%02d", $(chr+1));
+			if ($(chr+1) == "X") {
+				mychr = "X";
+			}
+			print mychr "_" sprintf("%09d", $(pos+1)) "_" $(all1+1) "_" $(all2+1) "\t" myfreq "\t" maf
 		} else {
 			print "KEY\tAF_coded_all_studay\tMAF_study"
 		}
@@ -86,7 +90,7 @@ echo
 echo "Join with KGP file: $KGP"
 echo "Target: $STUDY_JOIN_FILE"
 
-join $STUDY_FREQ_FILE $KGP > $STUDY_JOIN_FILE
+join --header $STUDY_FREQ_FILE $KGP > $STUDY_JOIN_FILE
 
 wc -l $STUDY_FREQ_FILE
 wc -l $KGP
