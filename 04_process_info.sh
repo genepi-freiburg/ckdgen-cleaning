@@ -22,30 +22,44 @@ BN=`basename ${FN}`
 
 echo "Transform/sort: $BN (${INFO_IN_DIR} -> ${INFO_OUT_DIR})"
 
-echo -e "SNP\tCHR_POS\tMARKER\tREF\tALT\tALT_Frq\tMAF\toevar_imp\tIS_IMPUTED" \
+FIND_COL="/shared/cleaning/scripts/find-column-index.pl"
+
+SNP_COL=`$FIND_COL SNP $FN`
+RSQ_COL=`$FIND_COL Rsq $FN`
+IMP_COL=`$FIND_COL Genotyped $FN`
+
+echo "Column indices (0-based): SNP = $SNP_COL, Rsq = $RSQ_COL, Genotyped = $IMP_COL"
+if [ "$SNP_COL" == "-1" ] || [ "$RSQ_COL" == "-1" ] || [ "$IMP_COL" == -1 ]
+then
+	echo "Required column not found. Please check input file: $FN"
+	exit 3
+fi
+
+# out: chr, chr_pos, rsq, is_imputed
+echo -e "CHR\tCHR_POS\toevar_imp\tIS_IMPUTED" \
 	> ${INFO_OUT_DIR}/$BN
 
 cat $FN | \
-	awk 'BEGIN { 
+	awk  -v snpCol=$SNP_COL -v rsqCol=$RSQ_COL -v impCol=$IMP_COL 'BEGIN { 
 		OFS = "\t"; 
 	} 
 	{ 
 		if (FNR > 1) {
-			impflag = $8; 
-			if ($8 == "Imputed") {
+			impflag = $(impCol+1); 
+			if (impflag == "Imputed") {
 				 impflag = "1";
-			} else if ($8 == "-") {
+			} else if (impflag == "-") {
 				impflag = "NA";
 			} else {
 				impflag = "0";
 			}
 
-			rsq = $6;
+			rsq = $(rsqCol+1);
 			if (rsq == "-") {
 				rsq = "NA";
 			}
 
-                        split($1, chrpos, ":");
+                        split($(snpCol+1), chrpos, ":");
 			if (chrpos[1] != "X") {
 	                        chr = sprintf("%02d", chrpos[1]);
 			} else {
@@ -53,11 +67,7 @@ cat $FN | \
 			}
                         pos = sprintf("%09d", chrpos[2]);
 
-			is_indel = length($2) > 1 || length($3) > 1;
-			indel_mark = is_indel ? "I" : "S";
-
-			print $1, chr "_" pos, chr "_" pos "_" indel_mark, 
-				$2, $3, $4, $5, rsq, impflag
+			print chr, chr "_" pos, rsq, impflag
 		}
 	}' \
 	| sort -k 2 >> ${INFO_OUT_DIR}/$BN

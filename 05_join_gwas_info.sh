@@ -64,13 +64,13 @@ do
         # JOIN
         #####################################################################
 
-	# info: 1 chr_pos, 8 oevar_imp, 9 is_imputed
+	# info: 1 chr_pos, 2 chr, 3 oevar_imp, 4 is_imputed
 	# gwas quantitative: 2 chr_pos, imputed 17, oevap_imp 19
 	# gwas binary: +4 cols (22 instead of 18)
 
 	join --header -1 2 -2 1 \
 		-t $'\t' \
-		-o 1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,1.10,1.11,1.12,1.13,1.14,1.15,1.16,2.9,1.18,2.8,1.20,1.21,1.22,1.23 \
+		-o 1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,1.10,1.11,1.12,1.13,1.14,1.15,1.16,2.4,1.18,2.3,1.20,1.21,1.22,1.23 \
 		$GWAS_IN_DIR/$OUT $INFO_IN_DIR/$INFO > $GWAS_OUT_DIR/$OUT
 done
 
