@@ -5,5 +5,5 @@
 ../../scripts/07_plot_positions.sh | tee 07_plot_positions.log
 ../../scripts/08_plot_freqs_kgp_detect_POP.sh | tee 08_plot_freqs_kgp_detect_POP.log
 ../../scripts/09_check_controls.sh | tee 09_check_controls.log
-../../scripts/10_cleanup.sh | tee 10_cleanup.log
+#../../scripts/10_cleanup.sh | tee 10_cleanup.log
 
