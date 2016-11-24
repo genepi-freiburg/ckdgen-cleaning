@@ -53,7 +53,9 @@ cat $STUDY  | \
 
 STUDY_FREQ_FILE_SORTED="${STUDY_FREQ_FILE}.sorted"
 echo "Sort study join file to: $STUDY_FREQ_FILE_SORTED"
-sort $STUDY_FREQ_FILE > $STUDY_FREQ_FILE_SORTED
+
+head -n 1 $STUDY_FREQ_FILE > $STUDY_FREQ_FILE_SORTED
+tail -n +2 $STUDY_FREQ_FILE | sort >> $STUDY_FREQ_FILE_SORTED
 mv -fv $STUDY_FREQ_FILE_SORTED $STUDY_FREQ_FILE
 
 STUDY_JOIN_FILE="${STUDY_FREQ_FILE}.joined"
@@ -61,7 +63,7 @@ echo
 echo "Join with HRC file: $HRC"
 echo "Target: $STUDY_JOIN_FILE"
 
-join $STUDY_FREQ_FILE $HRC > $STUDY_JOIN_FILE
+join --header $STUDY_FREQ_FILE $HRC > $STUDY_JOIN_FILE
 
 wc -l $STUDY_FREQ_FILE
 wc -l $HRC
@@ -78,5 +80,5 @@ $GNUPLOT -e "infile='${STUDY_JOIN_FILE}';outfile='${PLOT_FILE_MAF}'" /shared/cle
 
 echo 
 echo "Cleanup"
-rm -fv $STUDY_JOIN_FILE
-rm -fv $STUDY_FREQ_FILE
+#rm -fv $STUDY_JOIN_FILE
+#rm -fv $STUDY_FREQ_FILE
