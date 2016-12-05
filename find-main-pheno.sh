@@ -8,6 +8,9 @@ then
 elif [[ $FN == *_eGFR_* ]]
 then
         echo "eGFR"
+elif [[ $FN == *eGFR_* ]]
+then
+        echo "eGFR"
 elif [[ $FN == *_egfr_* ]]
 then
         echo "eGFR"
@@ -30,6 +33,9 @@ elif [[ $FN == *_urate_* ]]
 then
         echo "urate"
 elif [[ $FN == *_uric_acid_* ]]
+then
+        echo "urate"
+elif [[ $FN == *uric_acid_* ]]
 then
         echo "urate"
 else
