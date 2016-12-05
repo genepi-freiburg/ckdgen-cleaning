@@ -22,6 +22,12 @@ then
 fi
 
 BN=`basename ${FN}`
+SUFFIX=${BN##*.}
+if [ "$SUFFIX" != "txt" ]
+then
+	echo "STOP - input files should end with .txt."
+	echo "Please use the 'rename' command to fix the input file: $FN"
+fi
 
 ####################################################################
 # GENERATE ADDITIONAL COLUMNS
