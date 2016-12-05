@@ -107,8 +107,15 @@ mv ${GWAS_OUT_DIR}/$BN ${GWAS_OUT_DIR}/$BN2
 BN=$BN2
 
 echo "bgzip and tabix"
+
+OUT_CHR=`$FIND_COL chr $GWAS_OUT_DIR/$BN`
+OUT_POS=`$FIND_COL position $GWAS_OUT_DIR/$BN`
+OUT_MARKER=`$FIND_COL CHR_POS $GWAS_OUT_DIR/$BN`
+
+echo "Columns (0-based) in output: chr = $OUT_CHR, position = $OUT_POS, marker = $OUT_MARKER"
+
 cat $GWAS_OUT_DIR/$BN | bgzip > ${GWAS_OUT_DIR}/${BN}.gz
-tabix -s 4 -b 5 -e 5 -S 1 -f ${GWAS_OUT_DIR}/${BN}.gz
+tabix -s $((OUT_CHR+1)) -b $((OUT_POS+1)) -e $((OUT_POS+1)) -S $((OUT_MARKER+1)) -f ${GWAS_OUT_DIR}/${BN}.gz
 
 done
 
