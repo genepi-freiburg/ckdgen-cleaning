@@ -89,9 +89,21 @@ wc -l $FN ${GWAS_PROCESSED_DIR}/$BN ${GWAS_PROCESSED_DIR}/${BN}.unique \
 	${GWAS_PROCESSED_DIR}/${BN}.duplicates ${GWAS_OUT_DIR}/$BN | \
 	grep -v "total"
 
-	echo "bgzip and tabix"
-        cat $GWAS_OUT_DIR/$BN | bgzip > ${GWAS_OUT_DIR}/${BN}.gz
-        tabix -s 4 -b 5 -e 5 -S 1 -f ${GWAS_OUT_DIR}/${BN}.gz
+#####################################################################
+# RENAME COLUMNS/FILES AND BGZIP/TABIX/MD5SUM
+#####################################################################
+
+/shared/cleaning/scripts/rename-columns.sh IQ=oevar_imp,Pvalue=pval ${GWAS_OUT_DIR}/$BN
+
+BN2=$(echo $BN | sed s/\.txt$/\.gwas/)
+echo "Rename to .gwas: $BN -> $BN2"
+mv ${GWAS_OUT_DIR}/$BN ${GWAS_OUT_DIR}/$BN2
+BN=$BN2
+
+echo "bgzip and tabix"
+cat $GWAS_OUT_DIR/$BN | bgzip > ${GWAS_OUT_DIR}/${BN}.gz
+tabix -s 4 -b 5 -e 5 -S 1 -f ${GWAS_OUT_DIR}/${BN}.gz
+
 done
 
 md5sum $GWAS_OUT_DIR/* | tee 05_gwas_combined.md5.txt
