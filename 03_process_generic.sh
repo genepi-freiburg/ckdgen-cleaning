@@ -119,7 +119,7 @@ tabix -s $((OUT_CHR+1)) -b $((OUT_POS+1)) -e $((OUT_POS+1)) -S $((OUT_MARKER+1))
 
 done
 
-md5sum $GWAS_OUT_DIR/* | tee 05_gwas_combined.md5.txt
+md5sum $GWAS_OUT_DIR/*.gwas | tee 05_gwas_combined.md5.txt
 
 
 

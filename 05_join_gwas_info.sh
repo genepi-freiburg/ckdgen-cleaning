@@ -102,4 +102,4 @@ do
         tabix -s 4 -b 5 -e 5 -S 1 -f ${GWAS_JOIN_DIR}/${BN}.gz
 done
 
-md5sum $GWAS_JOIN_DIR/* | tee 05_gwas_combined.md5.txt
+md5sum $GWAS_JOIN_DIR/*.gwas | tee 05_gwas_combined.md5.txt
