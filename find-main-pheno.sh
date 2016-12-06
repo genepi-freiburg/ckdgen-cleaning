@@ -2,7 +2,7 @@ FN=$1
 if [ "$FN" == "" ]
 then
 	echo "Need filename"
-elif [[ $FN == *_creatinine_* ]]
+elif [[ $FN == *_creatinine_* ]] || [[ $FN == *_Creatinine_* ]]
 then
 	echo "creatinine"
 elif [[ $FN == *_eGFR_* ]]
@@ -32,12 +32,18 @@ then
 elif [[ $FN == *_urate_* ]]
 then
         echo "urate"
-elif [[ $FN == *_uric_acid_* ]]
+elif [[ $FN == *Uric_Acid* ]]
 then
         echo "urate"
-elif [[ $FN == *uric_acid_* ]]
+elif [[ $FN == *uric_acid* ]]
 then
         echo "urate"
+elif [[ $FN == *Gout* ]] || [[ $FN == *gout* ]]
+then
+        echo "gout"
+elif [[ $FN == *_CKD_* ]] # CAVE: GCKD
+then
+        echo "CKD"
 else
 	echo "???"
 fi
