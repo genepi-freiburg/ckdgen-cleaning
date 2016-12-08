@@ -19,4 +19,7 @@ done
 ls -l
 Rscript gwasqc.R
 
+# cleanup links
+rm *.gwas
+
 cd $WD
