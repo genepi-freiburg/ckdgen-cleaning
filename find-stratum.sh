@@ -2,7 +2,7 @@ FN=$1
 if [ "$FN" == "" ]
 then
 	echo "Need filename"
-elif [[ $FN == *nonDM* ]]
+elif [[ $FN == *nonDM* ]] || [[ $FN == *nondm* ]]
 then
         echo "nonDM"
 elif [[ $FN == *_DM* ]]
