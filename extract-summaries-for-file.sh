@@ -101,7 +101,7 @@ IQ_Q3=`cat $QCTXT | grep "Imputation quality" -A 25 | grep "75%" | awk '{ print 
 
 
 
-# echo "File Name	Trait	Stratum	FileCreationDate	MD5Checksum	Assigned Analyst	File Checking Date	FileOK?	Analyst Comments	N total	N cases (binary)	N rows	Beta_MEDIAN	Beta_MEAN	Beta_SD	Beta_Q1	Beta_Q3	Beta_Comments	SE_MEDIAN	SE_MEAN	SE_SD	SE_Q1	SE_Q3	SE_Comments	PVAL_N	PVAL_MEAN	PVAL_SD	PVAL_MIN	PVAL_MAX	PVAL_Comments	AF_coded_all_MEDIAN	AF_coded_all_MEAN	AF_coded_all_SD	AF_coded_all_Q1	AF_coded_all_Q3	AF_coded_all_Comments	IQ_MEDIAN	IQ_MEAN	IQ_SD	IQ_Q1	IQ_Q3	IQ_Comments	lambda unfiltered	lambda rsq >0.3, MAF >0.01	position plot ok?	AF plot ok?"
+# echo "File Name	Trait	Stratum	FileCreationDate	MD5Checksum	Assigned Analyst	File Checking Date	FileOK?	Analyst Comments	N total	N cases (binary)	N rows	Beta_MEDIAN	Beta_MEAN	Beta_SD	Beta_Q1	Beta_Q3	Beta_Comments	SE_MEDIAN	SE_MEAN	SE_SD	SE_Q1	SE_Q3	SE_Comments	PVAL_N	PVAL_MEAN	PVAL_SD	PVAL_MIN	PVAL_MAX	PVAL_Comments	AF_coded_all_MEDIAN	AF_coded_all_MEAN	AF_coded_all_SD	AF_coded_all_Q1	AF_coded_all_Q3	AF_coded_all_Comments	IQ_MEDIAN	IQ_MEAN	IQ_SD	IQ_Q1	IQ_Q3	IQ_Comments	lambda unfiltered	lambda rsq >0.3, MAF >0.01	lambda rsq >0.9, MAF >0.05	position plot ok?	AF plot ok?"
 echo -n "$BN	"
 echo -n "$TRAIT	"
 echo -n "$STRATUM	"
@@ -145,7 +145,8 @@ echo -n "$IQ_Q1	"
 echo -n "$IQ_Q3	"
 echo -n "	"
 echo -n "<lambda_unf>	"
-echo -n "<lambda_filt>	"
+echo -n "<lambda_filt1>	"
+echo -n "<lambda_filt2>	"
 echo -n "<pos ok?>	"
 echo -n "<af ok?>"
 echo
