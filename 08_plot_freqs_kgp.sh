@@ -7,7 +7,7 @@ then
 fi
 
 mkdir -p 08_plot_freqs
-for FN in `ls 06_concat/*.epacts`
+for FN in `ls 05_gwas_combined/*.gwas`
 do
 	echo "Check $FN with KGP $POP"
 	../../scripts/join-to-kgp-and-plot.sh $FN $POP
