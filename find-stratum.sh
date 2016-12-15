@@ -17,6 +17,9 @@ then
 elif [[ $FN == *_overall_* ]]
 then
         echo "overall"
+elif [[ $FN == *overall* ]]
+then
+        echo "overall"
 else
 	echo "???"
 fi

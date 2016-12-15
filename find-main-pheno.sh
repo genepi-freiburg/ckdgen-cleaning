@@ -2,7 +2,7 @@ FN=$1
 if [ "$FN" == "" ]
 then
 	echo "Need filename"
-elif [[ $FN == *_creatinine_* ]] || [[ $FN == *_Creatinine_* ]]
+elif [[ $FN == *_creatinine_* ]] || [[ $FN == *_Creatinine_* ]] || [[ $FN == *Creatinine* ]] || [[ $FN == *creatinine* ]]
 then
 	echo "creatinine"
 elif [[ $FN == *_eGFR_* ]]
@@ -14,7 +14,10 @@ then
 elif [[ $FN == *_egfr_* ]]
 then
         echo "eGFR"
-elif [[ $FN == *_MA_* ]]
+elif [[ $FN == *egfr_decline* ]]
+then
+        echo "eGFR_decline"
+elif [[ $FN == *_MA_* ]] || [[ $FN == *MA* ]]
 then
         echo "MA"
 elif [[ $FN == *_UACR_* ]]
@@ -23,10 +26,13 @@ then
 elif [[ $FN == *_uacr_* ]]
 then
         echo "UACR"
+elif [[ $FN == *UACR* ]]
+then
+        echo "UACR"
 elif [[ $FN == *_BUN_* ]]
 then
         echo "BUN"
-elif [[ $FN == *_bun_* ]]
+elif [[ $FN == *_bun_* ]] || [[ $FN == *bun* ]]
 then
         echo "BUN"
 elif [[ $FN == *_urate_* ]]
@@ -41,9 +47,15 @@ then
 elif [[ $FN == *Gout* ]] || [[ $FN == *gout* ]]
 then
         echo "gout"
-elif [[ $FN == *_CKD_* ]] # CAVE: GCKD
+elif [[ $FN == *rapid3* ]] 
+then
+        echo "rapid3"
+elif [[ $FN == *_CKD_* ]] || [[ $FN == *_CKD* ]] || [[ $FN == *.CKD* ]] #CAVE: GCKD
 then
         echo "CKD"
+elif [[ $FN == *CKDi25* ]] 
+then
+        echo "CKDi25"
 else
 	echo "???"
 fi
