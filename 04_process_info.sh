@@ -29,10 +29,15 @@ RSQ_COL=`$FIND_COL Rsq $FN`
 IMP_COL=`$FIND_COL Genotyped $FN`
 
 echo "Column indices (0-based): SNP = $SNP_COL, Rsq = $RSQ_COL, Genotyped = $IMP_COL"
-if [ "$SNP_COL" == "-1" ] || [ "$RSQ_COL" == "-1" ] || [ "$IMP_COL" == -1 ]
+if [ "$SNP_COL" == "-1" ] || [ "$RSQ_COL" == "-1" ] 
 then
 	echo "Required column not found. Please check input file: $FN"
 	exit 3
+fi
+
+if [ "$IMP_COL" == "-1" ]
+then
+	echo "WARNING: No 'is_imputed' column - assuming NA"
 fi
 
 # out: chr, chr_pos, rsq, is_imputed
@@ -45,13 +50,16 @@ cat $FN | \
 	} 
 	{ 
 		if (FNR > 1) {
-			impflag = $(impCol+1); 
-			if (impflag == "Imputed") {
-				 impflag = "1";
-			} else if (impflag == "-") {
-				impflag = "NA";
-			} else {
-				impflag = "0";
+			impflag = "NA";
+			if (impCol > -1) {
+				impflag = $(impCol+1); 
+				if (impflag == "Imputed") {
+					 impflag = "1";
+				} else if (impflag == "-") {
+					impflag = "NA";
+				} else {
+					impflag = "0";
+				}
 			}
 
 			rsq = $(rsqCol+1);
