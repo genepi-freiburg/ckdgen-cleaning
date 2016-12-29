@@ -5,6 +5,12 @@ then
 elif [[ $FN == *_creatinine_* ]] || [[ $FN == *_Creatinine_* ]] || [[ $FN == *Creatinine* ]] || [[ $FN == *creatinine* ]]
 then
 	echo "creatinine"
+elif [[ $FN == *egfr_decline* ]] || [[ $$N == *eGFR_decline* ]]
+then
+	echo "eGFR_decline"
+elif [[ $FN == *rapid3* ]]
+then
+	echo "rapid3"
 elif [[ $FN == *_eGFR_* ]]
 then
         echo "eGFR"
