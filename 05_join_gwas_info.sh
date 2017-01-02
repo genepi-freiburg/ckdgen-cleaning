@@ -23,8 +23,10 @@ do
 	# DETERMINE INFO FILE TO USE ACCORDING TO "PAIRS" FILE
         #####################################################################
 
-	rm -f /tmp/info.txt
-	touch /tmp/info.txt
+	TEMP_INFO=/tmp/info_$RANDOM.txt
+
+	rm -f $TEMP_INFO
+	touch $TEMP_INFO
 	INFO=""
 	cat $PAIRS_FILE | while IFS='' read -r PAIR || [[ -n "$line" ]]
 	do
@@ -43,23 +45,36 @@ do
 				echo "Pattern: $GWAS_PATTERN"
 				echo "Resulting info file: $INFO_PATTERN"
 				INFO="$INFO_PATTERN"
-				echo $INFO > /tmp/info.txt #????
+				echo $INFO > $TEMP_INFO #????
 			fi
 		fi
 	done
-	INFO=$(cat /tmp/info.txt)
-	rm -f /tmp/info.txt
+	INFO=$(cat $TEMP_INFO)
+	rm -f $TEMP_INFO
 	if [ "$INFO" == "" ]
 	then
 		echo "INFO=$INFO"
 		echo "No pattern matches filename: $FN"
 		exit 9
 	fi
+	ORIG_INFO=$INFO
 	INFO=`echo $INFO | sed s/%CHR%/$CHR/`
 	echo "Input:  $GWAS_IN_DIR/$OUT"
 	echo "Info:   $INFO_IN_DIR/$INFO"
 	echo "Output: $GWAS_OUT_DIR/$OUT"
 
+	if [ ! -f "$INFO_IN_DIR/$INFO" ]
+	then
+		INFO=`echo $ORIG_INFO | sed s/%CHR%/0$CHR/`
+		echo "Try $INFO instead"
+	fi
+
+        if [ ! -f "$INFO_IN_DIR/$INFO" ]
+	then
+		echo "WARNING: Info not found"
+		exit 9
+	fi	
+	
         #####################################################################
         # JOIN
         #####################################################################
