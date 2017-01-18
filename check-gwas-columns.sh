@@ -12,12 +12,17 @@ ERRORFLAG=0
 for COL in $COLS
 do
 	COLPOS=`$FIND_COL $COL $INFILE`
-	if [ "$COLPOS" == "-1" ]
+	if [ "$COLPOS" == "-1" ] && [ "$COL" != "used_for_imp" ]
 	then
 		echo "Required column NOT present: $COL"
 		ERRORFLAG=1
 	else
-		echo "Column $COL found at 0-based index: $COLPOS"
+		if [ "$COLPOS" == "-1" ]
+		then
+			echo "OPTIONAL column NOT present: $COL"
+		else
+			echo "Column $COL found at 0-based index: $COLPOS"
+		fi
 	fi
 done
 
