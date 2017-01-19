@@ -40,33 +40,37 @@ STUDY_CHR=`$FIND_COL chr $FN`
 STUDY_POS=`$FIND_COL position $FN`
 STUDY_ALL1=`$FIND_COL noncoded_all $FN`
 STUDY_ALL2=`$FIND_COL coded_all $FN`
-echo "Column indices (0-based): Chr = $STUDY_CHR, Pos = $STUDY_POS, All1 = $STUDY_ALL1, All2 = $STUDY_ALL2"
-if [ "$STUDY_CHR" == "-1" ] || [ "$STUDY_POS" == "-1" ] || [ "$STUDY_ALL1" == "-1" ] || [ "$STUDY_ALL2" == "-1" ]
+STUDY_BETA=`$FIND_COL beta $FN`
+echo "Column indices (0-based): Chr = $STUDY_CHR, Pos = $STUDY_POS, All1 = $STUDY_ALL1, All2 = $STUDY_ALL2, Beta = $STUDY_BETA"
+if [ "$STUDY_CHR" == "-1" ] || [ "$STUDY_POS" == "-1" ] || [ "$STUDY_ALL1" == "-1" ] || [ "$STUDY_ALL2" == "-1" ] || [ "$STUDY_BETA" == "-1" ]
 then
 	echo "Required column not found. Please check input file: $FN"
 	exit 3
 fi
 
 cat $FN | tr ' ' \\t | \
-	awk  -v chrCol=$STUDY_CHR -v posCol=$STUDY_POS -v all1Col=$STUDY_ALL1 -v all2Col=$STUDY_ALL2 \
+	awk  -v chrCol=$STUDY_CHR -v posCol=$STUDY_POS -v all1Col=$STUDY_ALL1 -v all2Col=$STUDY_ALL2 -v betaCol=$STUDY_BETA \
 	'BEGIN { 
 		OFS = "\t"; 
 	} 
 	{ 
 		if (FNR > 1) {
-			chr = $(chrCol+1);
-			if (chr != "X") {
-				chr = sprintf("%02d", chr)
+			beta = $(betaCol+1);
+			if (beta != "Inf" && beta != "-Inf") {
+				chr = $(chrCol+1);
+				if (chr != "X") {
+					chr = sprintf("%02d", chr)
+				}
+				pos = sprintf("%09d", $(posCol+1));
+				$(posCol+1) = $(posCol+1)+0; # try to fix funny NEO input "chr1:45000000:D 1 4.5e+07 T"
+				all1 = $(all1Col+1);
+				all2 = $(all2Col+1);
+				marker = "S";
+				if (length(all1) > 1 || length(all2) > 1) {
+					marker = "I";
+				}
+				print chr "_" pos, chr "_" pos "_" marker, $0;
 			}
-			pos = sprintf("%09d", $(posCol+1));
-			$(posCol+1) = $(posCol+1)+0; # try to fix funny NEO input "chr1:45000000:D 1 4.5e+07 T"
-			all1 = $(all1Col+1);
-			all2 = $(all2Col+1);
-			marker = "S";
-			if (length(all1) > 1 || length(all2) > 1) {
-				marker = "I";
-			}
-			print chr "_" pos, chr "_" pos "_" marker, $0;
 		} else {
 			print "CHR_POS", "MARKER", $0;
 		}
