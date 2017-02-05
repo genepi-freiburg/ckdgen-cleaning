@@ -17,7 +17,7 @@ USED_FOR_IMP  used_for_imp
 AVPOSTPROB    avpostprob
 
 # High quality filters
-HQ_SNP   0.001   0.3
+HQ_SNP   0.01   0.3
 
 # Plotting filters
 MAF      0.01   0.05
