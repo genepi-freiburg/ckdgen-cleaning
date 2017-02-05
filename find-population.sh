@@ -8,7 +8,13 @@ then
 elif [[ $FN == *_EA_* ]]
 then
         echo "EUR"
+elif [[ $FN == *_HIS* ]]
+then
+        echo "EUR"
 elif [[ $FN == *_AFR_* ]]
+then
+        echo "AFR"
+elif [[ $FN == *AA* ]]
 then
         echo "AFR"
 elif [[ $FN == *_AMR_* ]]
