@@ -4,7 +4,13 @@ use warnings;
 
 my $colName = $ARGV[0];
 my $fileName = $ARGV[1];
-open(FILE, "<", $fileName);
+
+if ($fileName =~ /.gz$/) {
+	open(FILE, "gunzip -c $fileName |");
+} else {
+	open(FILE, "<", $fileName);
+}
+
 my $header = <FILE>;
 chomp($header);
 my @fields = split(/[\t ]/, $header);
