@@ -60,7 +60,13 @@ STUDY_FREQ_FILE="${STUDY}.frequencies"
 echo
 echo "Prepare study join file: $STUDY_FREQ_FILE"
 
-cat $STUDY  | \
+CAT="cat"
+if [[ $STUDY =~ \.gz$ ]]
+then
+	CAT="zcat"
+fi
+
+$CAT $STUDY  | \
         awk -v chr=$STUDY_CHR -v pos=$STUDY_POS -v all1=$STUDY_ALL1 -v all2=$STUDY_ALL2 -v freq=$STUDY_FREQ \
         '{ 
 		if (FNR > 1) {
