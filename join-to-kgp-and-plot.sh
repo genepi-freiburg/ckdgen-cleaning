@@ -1,5 +1,14 @@
 STUDY=$1
 POP=$2
+SWAP=$3
+
+if [ "$SWAP" == "" ]
+then
+	SWAP="0"
+else
+	echo "Swapping REF/ALT alleles!"
+	SWAP="1"
+fi
 
 echo "Study file: $STUDY"
 echo "Population: $POP"
@@ -41,6 +50,12 @@ then
 	STUDY_ALL2=`$FIND_COL coded_all $STUDY`
 fi
 
+if [ "$SWAP" == "1" ]
+then
+	TEMP=$STUDY_ALL1
+	STUDY_ALL1=$STUDY_ALL2
+	STUDY_ALL2=$TEMP
+fi
 
 echo "Column indices in STUDY file: $STUDY"
 echo "-------------------------------------"
