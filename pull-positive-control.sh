@@ -112,7 +112,12 @@ then
 		REGION2="0${REGION}"
 	fi
 	echo "Region: $REGION"
-	LINE=`tabix ${STUDY}.gz ${REGION}`
+	STUDYGZ=$STUDY
+	if [[ "$STUDY" != *gz ]]
+	then	
+		STUDYGZ="${STUDY}.gz"
+	fi
+	LINE=`tabix ${STUDYGZ} ${REGION}`
 	if [ "$LINE" == "" ]
 	then
 		LINE=`tabix ${STUDY}.gz ${REGION2}`
