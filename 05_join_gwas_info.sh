@@ -58,7 +58,33 @@ do
 		exit 9
 	fi
 	ORIG_INFO=$INFO
-	INFO=`echo $INFO | sed s/%CHR%/$CHR/`
+
+	if [ "$CHR" == "X" ]
+	then
+		INFO_M=`echo $INFO | sed s/%CHR%/X_M/`
+                INFO_F=`echo $INFO | sed s/%CHR%/X_F/`
+		echo "Try ChrX male/female info files: $INFO_M / $INFO_F"
+		INFO=`echo $INFO | sed s/%CHR%/$CHR/`
+		if [ -f $INFO_IN_DIR/$INFO_M ]
+		then
+			if [[ $OUT == *chrX_M* ]]
+			then
+				echo "X_M input and X_M info!"
+				INFO=$INFO_M
+			fi
+		fi
+		if [ -f $INFO_IN_DIR/$INFO_F ]
+		then
+			if [[ $OUT == *chrX_F* ]]
+                        then
+				echo "X_F input and X_F info!"
+                        	INFO=$INFO_F
+			fi
+		fi
+	else
+		INFO=`echo $INFO | sed s/%CHR%/$CHR/`
+	fi	
+
 	echo "Input:  $GWAS_IN_DIR/$OUT"
 	echo "Info:   $INFO_IN_DIR/$INFO"
 	echo "Output: $GWAS_OUT_DIR/$OUT"
