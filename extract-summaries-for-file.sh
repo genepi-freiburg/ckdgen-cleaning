@@ -8,7 +8,7 @@ fi
 GWAS="05_gwas_combined/$BN"
 QCTXT="06_gwasqc/gwasqc${BN}.txt"
 
-if [ ! -f $GWAS ]
+if [ ! -f $GWAS ] && [ ! -f ${GWAS}.gz ]
 then
 	echo "GWAS file missing: $GWAS"
 	exit 3

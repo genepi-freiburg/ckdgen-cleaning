@@ -41,7 +41,7 @@ then
 elif [[ $FN == *_bun_* ]] || [[ $FN == *bun* ]]
 then
         echo "BUN"
-elif [[ $FN == *_urate_* ]]
+elif [[ $FN == *_urate_* ]] || [[ $FN == *uricacid* ]]
 then
         echo "urate"
 elif [[ $FN == *Uric_Acid* ]]
