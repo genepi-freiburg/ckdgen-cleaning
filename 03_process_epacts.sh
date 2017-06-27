@@ -9,6 +9,11 @@ do
         BN=${BN%.*} # remove trailing epacts
 	echo "Processing: $BN"
 	/shared/cleaning/scripts/epacts2gwas.pl -i $FN -o $GWAS_OUT/${BN}.gwas
+
+	OUTFN="$GWAS_OUT/${BN}.gwas"
+	echo "Sorting: $OUTFN"
+	cat $OUTFN | sort -k 2 > ${OUTFN}.sorted
+	mv ${OUTFN}.sorted $OUTFN
 done
 
 md5sum $EPACTS_IN/*.gz | tee 01_epacts_input.md5.txt
