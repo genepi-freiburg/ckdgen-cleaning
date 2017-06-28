@@ -12,7 +12,7 @@ do
 
 	OUTFN="$GWAS_OUT/${BN}.gwas"
 	echo "Sorting: $OUTFN"
-	cat $OUTFN | sort -k 2 > ${OUTFN}.sorted
+	(head -n 1 $OUTFN && tail -n +2 $OUTFN | sort -k 2) > ${OUTFN}.sorted
 	mv ${OUTFN}.sorted $OUTFN
 done
 
